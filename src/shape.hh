@@ -11,9 +11,10 @@ class Shape
 
 		// Constructs a shape with the given center coordinates (x, y).
 		// Parameters:
-		// int x - x coordinate of shape center
-		// int y - y coordinate of shape center
-		Shape(int x, int y);
+		// float x - x coordinate of shape center
+		// float y - y coordinate of shape center
+		// float z - z coordinate of shape center
+		Shape(float x, float y, float z);
 
 		// Adds the given vertex to the shape. If absolute is true, the vertices coordinates will be interpreted
 		// as being in absolute space. If false, they will be interpreted as relative to the shape's (x, y) coordinates.
@@ -29,9 +30,14 @@ class Shape
 		// int v3Idx - index of vertex 3 in shape's vertex list
 		void addTFace(int v1Idx, int v2Idx, int v3Idx);
 
+		std::vector<Vertex>* getVertices();
+
+		std::vector<TFace>* getFaces();
+
 	private:
-		int x;
-		int y;
+		float x;
+		float y;
+		float z;
 		std::vector<Vertex>* vertices;
 		std::vector<TFace>* faces;
 
