@@ -34,10 +34,14 @@ class Shape
 
 		std::vector<TFace>* getFaces();
 
+		int getId();
+
 	private:
 		float x;
 		float y;
 		float z;
+		int id;
+		static int shapeId;
 		std::vector<Vertex>* vertices;
 		std::vector<TFace>* faces;
 

@@ -1,10 +1,13 @@
 #include "shape.hh"
 
+int Shape::shapeId = 0;
+
 Shape::Shape(float x, float y, float z)
 {
 	this->x = x;
 	this->y = y;
 	this->z = z;
+	this->id = Shape::shapeId++;
 	vertices = new std::vector<Vertex>();
 	faces = new std::vector<TFace>();
 }
@@ -34,4 +37,9 @@ std::vector<Vertex>* Shape::getVertices()
 std::vector<TFace>* Shape::getFaces()
 {
 	return faces;
+}
+
+int Shape::getId()
+{
+	return id;
 }

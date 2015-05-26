@@ -12,6 +12,25 @@ void PlyWriter::write(Shape& shape, std::string outputPath)
 	}
 }
 
+void PlyWriter::writeShapes(std::vector<Shape>* shapes, std::string outputPath)
+{
+	unsigned int i;
+	std::ofstream plyfile(outputPath);
+	if(plyfile.is_open())
+	{
+		writeShapesHeader(shapes, plyfile);
+		for(i = 0; i < shapes->size(); i++)
+		{
+			writeVertices(shapes->at(i), plyfile);
+		}
+		for(i = 0; i < shapes->size(); i++)
+		{
+			writeFaces(shapes->at(i), plyfile);
+		}
+		plyfile.close();
+	}
+}
+
 void PlyWriter::writeHeader(Shape& shape, std::ofstream& file)
 {
 	file << "ply\n";
@@ -21,6 +40,28 @@ void PlyWriter::writeHeader(Shape& shape, std::ofstream& file)
 	file << "property float y\n";
 	file << "property float z\n";
 	file << "element face " + std::to_string(shape.getFaces()->size()) + "\n";
+	file << "property list uchar int vertex_indices\n";
+	file << "end_header\n";
+}
+
+void PlyWriter::writeShapesHeader(std::vector<Shape>* shapes, std::ofstream& file)
+{
+	unsigned int i;
+	int numFaces = 0;
+	int numVertices = 0;
+	for(i = 0; i < shapes->size(); i++)
+	{
+		numFaces += shapes->at(i).getFaces()->size();
+		numVertices += shapes->at(i).getVertices()->size();
+	}
+
+	file << "ply\n";
+	file << "format ascii 1.0\n";
+	file << "element vertex " + std::to_string(numVertices) + "\n";
+	file << "property float x\n";
+	file << "property float y\n";
+	file << "property float z\n";
+	file << "element face " + std::to_string(numFaces) + "\n";
 	file << "property list uchar int vertex_indices\n";
 	file << "end_header\n";
 }
