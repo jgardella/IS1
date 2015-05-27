@@ -31,7 +31,7 @@ class PlyWriter
 		static void writeShapesHeader(std::vector<Shape>* shapes, std::ofstream& file);
 
 		static void writeVertices(Shape& shape, std::ofstream& file);
-		static void writeFaces(Shape& shape, std::ofstream& file);
+		static void writeFaces(Shape& shape, std::ofstream& file, int offset);
 };
 
 #endif

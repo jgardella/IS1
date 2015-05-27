@@ -7,7 +7,7 @@ void PlyWriter::write(Shape& shape, std::string outputPath)
 	{
 		writeHeader(shape, plyfile);
 		writeVertices(shape, plyfile);
-		writeFaces(shape, plyfile);
+		writeFaces(shape, plyfile, 0);
 		plyfile.close();
 	}
 }
@@ -23,9 +23,11 @@ void PlyWriter::writeShapes(std::vector<Shape>* shapes, std::string outputPath)
 		{
 			writeVertices(shapes->at(i), plyfile);
 		}
+		int offset = 0;
 		for(i = 0; i < shapes->size(); i++)
 		{
-			writeFaces(shapes->at(i), plyfile);
+			writeFaces(shapes->at(i), plyfile, offset);
+			offset += shapes->at(i).getVertices()->size();
 		}
 		plyfile.close();
 	}
@@ -76,12 +78,12 @@ void PlyWriter::writeVertices(Shape& shape, std::ofstream& file)
 	}
 }
 
-void PlyWriter::writeFaces(Shape& shape, std::ofstream& file)
+void PlyWriter::writeFaces(Shape& shape, std::ofstream& file, int offset)
 {
 	std::vector<TFace>* faces = shape.getFaces();
 	for(unsigned int i = 0; i < faces->size(); i++)
 	{
 		TFace f = faces->at(i);
-		file << "3 " + std::to_string(f.v1Idx) + " " + std::to_string(f.v2Idx) + " " + std::to_string(f.v3Idx) + "\n";
+		file << "3 " + std::to_string(f.v1Idx + offset) + " " + std::to_string(f.v2Idx + offset) + " " + std::to_string(f.v3Idx + offset) + "\n";
 	}
 }
