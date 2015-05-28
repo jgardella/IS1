@@ -12,7 +12,7 @@ Shape::Shape(float x, float y, float z)
 	faces = new std::vector<TFace>();
 }
 
-void Shape::addVertex(Vertex& v, bool absolute)
+int Shape::addVertex(Vertex& v, bool absolute)
 {
 	if(!absolute) // offset from shape center if not absolute (relative)
 	{
@@ -22,6 +22,7 @@ void Shape::addVertex(Vertex& v, bool absolute)
 	}
 
 	vertices->push_back(v);
+	return vertices->size() - 1;
 }
 
 void Shape::addTFace(int v1Idx, int v2Idx, int v3Idx)
@@ -42,4 +43,10 @@ std::vector<TFace>* Shape::getFaces()
 int Shape::getId()
 {
 	return id;
+}
+
+void Shape::setFaces(std::vector<TFace>* newFaces)
+{
+	delete faces;
+	this->faces = newFaces;
 }

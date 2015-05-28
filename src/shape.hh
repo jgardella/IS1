@@ -21,7 +21,7 @@ class Shape
 		// Parameters:
 		// vertex v - vertex to add
 		// bool absolute - if true, v's coordinates are considered absolute, otherwise they are relative to shape
-		void addVertex(Vertex& v, bool absolute);
+		int addVertex(Vertex& v, bool absolute);
 
 		// Adds a triangulare face composed of the given three vertices to the shape.
 		// Parameters:
@@ -34,9 +34,11 @@ class Shape
 
 		std::vector<TFace>* getFaces();
 
+		void setFaces(std::vector<TFace>* faces);
+
 		int getId();
 
-	private:
+	protected:
 		float x;
 		float y;
 		float z;
