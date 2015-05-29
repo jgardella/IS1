@@ -8,7 +8,7 @@ int main(int argc, const char* argv[])
 {
 	if(argc < 8)
 	{
-		std::cout << "usage: sphere_gen <numSpheres> <minX> <minY> <minZ> <maxX> <maxY> <maxZ> <resolution>\n";
+		std::cout << "usage: sphere_gen <numSpheres> <minX> <minY> <minZ> <maxX> <maxY> <maxZ> <resolution> <filename>\n";
 	}
 	else
 	{
@@ -22,6 +22,7 @@ int main(int argc, const char* argv[])
 		int maxY = std::atoi(argv[6]);
 		int maxZ = std::atoi(argv[7]);
 		int resolution = std::atoi(argv[8]);
+		const char* filename = argv[9];
 		std::vector<Shape>* spheres = new std::vector<Shape>();
 
 		for(i = 0; i < numSpheres; i++)
@@ -33,7 +34,7 @@ int main(int argc, const char* argv[])
 			spheres->push_back(*new Icosahedron(x, y, z, resolution));
 		}
 
-		PlyWriter::writeShapes(spheres, "ply/sphere_test.ply");
+		PlyWriter::writeShapes(spheres, filename);
 	}
 	return 0;
 }
