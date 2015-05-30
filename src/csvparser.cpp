@@ -5,12 +5,12 @@ std::vector<Shape>* CSVParser::parseCSV(std::string filename)
 	std::ifstream file(filename);
 	std::string line;
 	int i;
-	float x, y, z;
+	float x, y, z, r;
 	std::vector<Shape>* shapeList = new std::vector<Shape>();
 	// read line
 	while(std::getline(file, line))
 	{
-		// split line on ',', we are only concerned with fifth, sixth, seventh columns
+		// split line on ',', we are only concerned with fifth, sixth, seventh, and 14th columns
 		std::istringstream s(line);
 		std::string field;
 		i = 0;
@@ -28,9 +28,13 @@ std::vector<Shape>* CSVParser::parseCSV(std::string filename)
 			{
 				z = std::stof(field);
 			}
+			else if(i == 13)
+			{
+				r = std::stof(field);
+			}
 			i++;
 		}
-		shapeList->push_back(*new Icosahedron(x, y, z, 0));
+		shapeList->push_back(*new Icosahedron(x, y, z, r, 0));
 	}
 	return shapeList;
 }

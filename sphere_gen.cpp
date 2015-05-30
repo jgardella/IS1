@@ -31,7 +31,7 @@ int main(int argc, const char* argv[])
 			y = std::rand() % (maxY - minY + 1) + minY;
 			z = std::rand() % (maxZ - minZ + 1) + minZ;
 
-			spheres->push_back(*new Icosahedron(x, y, z, resolution));
+			spheres->push_back(*new Icosahedron(x, y, z, 1, resolution));
 		}
 
 		PlyWriter::writeShapes(spheres, filename);

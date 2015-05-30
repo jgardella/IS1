@@ -10,10 +10,11 @@ class Icosahedron : public Shape
 {
 	public:
 
-		Icosahedron(float x, float y, float z, int resolution);
+		Icosahedron(float x, float y, float z, float radius, int resolution);
 
 	private:
 		std::map<std::pair<int, int>, int>* refinementMap;
+		float radius;
 
 		// Creates the middle point between the two vertices if it hasn't already been created. Used for refinement.
 		// Parameters:

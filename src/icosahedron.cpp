@@ -1,10 +1,11 @@
 #include "icosahedron.hh"
 
-Icosahedron::Icosahedron(float x, float y, float z, int resolution) : Shape(x, y, z)
+Icosahedron::Icosahedron(float x, float y, float z, float radius, int resolution) : Shape(x, y, z)
 {
+	this->radius = radius;
 	int i;
 	unsigned int j;
-	float t = (1.0 + std::sqrt(5.0)) / 2.0;
+	float t = (1.0 + std::sqrt(5)) / 2.0; // golden ratio (approx. 1.618)
 
 	// add vertices
 	addVertex(*new Vertex(-1,  t,  0));
@@ -72,7 +73,6 @@ Icosahedron::Icosahedron(float x, float y, float z, int resolution) : Shape(x, y
 	  this->setFaces(newFaces);
 	  delete refinementMap;
 	}
-
 }
 
 int Icosahedron::addVertex(Vertex& v)
@@ -81,7 +81,7 @@ int Icosahedron::addVertex(Vertex& v)
 	double length = std::sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
 
 	// change positioning to absolute
-	Vertex* adjustedV = new Vertex(v.x/length, v.y/length, v.z/length);
+	Vertex* adjustedV = new Vertex(radius * v.x/length, radius * v.y/length, radius * v.z/length);
 	adjustedV->x += this->x;
 	adjustedV->y += this->y;
 	adjustedV->z += this->z;
