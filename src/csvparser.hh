@@ -12,7 +12,7 @@
 class CSVParser
 {
 	public:
-		static std::vector<Shape>* parseCSV(std::string filename);
+		static std::vector<Shape>* parseCSV(std::string filename, int resolution, float minR, float maxR, float radius);
 };
 
 #endif
