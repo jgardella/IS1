@@ -38,6 +38,10 @@ class Shape
 
 		int getId();
 
+		float getX();
+		float getY();
+		float getZ();
+
 	protected:
 		float x;
 		float y;
