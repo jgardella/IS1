@@ -13,6 +13,9 @@ class Cube : public Shape
 
 	private:
 		float width;
+		int minX, maxX;
+		int minY, maxY;
+		int minZ, maxZ;
 };
 
 #endif

@@ -6,6 +6,7 @@
 #include <cfloat>
 #include "shape.hh"
 #include "csvparser.hh"
+#include "cube.hh"
 
 class DensityEstimator
 {
@@ -18,12 +19,20 @@ class DensityEstimator
 		// 					10, then each volume will be 1u^3, and there will be 1000 volumes
 		// Returns a mapping from the center point of each volume used to the density estimate
 		// for that volume.
-		static std::map<std::pair<int, int>, float>* estimate(std::string csvfile, int volumeSize);
+		static std::map<Vertex, float>* estimate(std::string csvfile, int volumeSize);
 
 	private:
+		static float minX, maxX;
+		static float minY, maxY;
+		static float minZ, maxZ;
+		static float subvolumeSize;
+		static float subvolumeWidth;
 
-		void calculateBoundingBox(std::vector<Shape>* shapes);
+		static std::vector<Shape>* shapes;
 
+		static void calculateBoundingBox(std::vector<Shape>* shapes);
+
+		static void calculateDensityForSubvolume(Cube* subvolume, int volumeSize, std::map<std::pair<Vertex, float>* densityMap);
 };
 
 #endif

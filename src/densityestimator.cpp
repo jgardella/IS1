@@ -1,16 +1,34 @@
 #include "densityestimator.hh"
 
-static std::map<std::pair<int, int>, float>* estimate(std::string csvfile, int volumeSize)
+std::map<std::pair<int, int>, float>* DensityEstimator::estimate(std::string csvfile, int volumeRatio)
 {
-	std::vector<Shape>* shapes = CSVParser::parseCSV(csvfile, 0, minR, maxR, radius);
+	float i, j, k;
 
+	shapes = CSVParser::parseCSV(csvfile, 0, minR, maxR, radius);
+	calculateBoundingVolume(shapes);
 
+	subvolumeSize = ((maxX - minX) * (maxY - minY) * (maxZ - minZ)) / volumeRatio;
+	subvolumeWidth = std::cbrt(subvolumeSize);
+
+	std::map<Vertex, float>* densityMap = new std::map<Vector, float>();
+	for(i = minX; i < maxX; i += subvolumeWidth)
+	{
+		for(j = minY; j < maxY; j += subvolumeWidth)
+		{
+			for(k = minZ; k < maxZ; k += subvolumeWidth)
+			{
+				calculateDensityForSubvolume(new Cube(i, j, k, subvolumeSize), densityMap);
+			}
+		}
+	}
+
+	return densityMap;
 }
 
-static void calculateBoundingVolume(std::vector<Shape>* shapes)
+void DensityEstimator::calculateBoundingVolume(std::vector<Shape>* shapes)
 {
-	float minX = FLT_MAX, minY = FLT_MAX, minZ = FLT_MAX;
-	float maxX = FLT_MIN, maxY = FLT_MIN, maxZ = FLT_MIN;
+	minX = FLT_MAX, minY = FLT_MAX, minZ = FLT_MAX;
+	maxX = FLT_MIN, maxY = FLT_MIN, maxZ = FLT_MIN;
 	for(unsigned int i = 0; i < shapes->size(); i++)
 	{
 		Shape shape = shapes->at(i);
@@ -28,6 +46,23 @@ static void calculateBoundingVolume(std::vector<Shape>* shapes)
 		if(shape.getZ() > maxZ)
 			maxZ = shape.getZ();
 	}
+}
 
+void DensityEstimator::calculateDensityForSubvolume(Cube* subvolume, std::map<Vertex, float> densityMap)
+{
+	int s;
 
+	// count bacteria in subvolume
+	int numBacteria = 0;
+	for(s = 0; s < shapes->size(); s++)
+	{
+		if(subvolume->contains(shapes->at(s)))
+		{
+			numBacteria++;
+		}
+	}
+
+	// add calculated density to map
+	densityMap->insert(std::pair<Vertex, float>(*(new Vertex(subvolume->getX(), subvolume->getY(), subvolume->getZ())),
+												((float) numBacteria) /  subvolumeSize));
 }
