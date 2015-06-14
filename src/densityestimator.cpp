@@ -1,23 +1,33 @@
 #include "densityestimator.hh"
 
-std::map<std::pair<int, int>, float>* DensityEstimator::estimate(std::string csvfile, int volumeRatio)
+float DensityEstimator::minX;
+float DensityEstimator::maxX;
+float DensityEstimator::minY;
+float DensityEstimator::maxY;
+float DensityEstimator::minZ;
+float DensityEstimator::maxZ;
+float DensityEstimator::subvolumeSize;
+float DensityEstimator::subvolumeWidth;
+std::vector<Shape>* DensityEstimator::shapes;
+
+std::map<Vertex, float, CmpVertex>* DensityEstimator::estimate(std::string csvfile, int volumeRatio)
 {
 	float i, j, k;
 
-	shapes = CSVParser::parseCSV(csvfile, 0, minR, maxR, radius);
+	shapes = CSVParser::parseCSV(csvfile, 0, 35, 60, 48);
 	calculateBoundingVolume(shapes);
 
 	subvolumeSize = ((maxX - minX) * (maxY - minY) * (maxZ - minZ)) / volumeRatio;
 	subvolumeWidth = std::cbrt(subvolumeSize);
 
-	std::map<Vertex, float>* densityMap = new std::map<Vector, float>();
+	std::map<Vertex, float, CmpVertex>* densityMap = new std::map<Vertex, float, CmpVertex>();
 	for(i = minX; i < maxX; i += subvolumeWidth)
 	{
 		for(j = minY; j < maxY; j += subvolumeWidth)
 		{
 			for(k = minZ; k < maxZ; k += subvolumeWidth)
 			{
-				calculateDensityForSubvolume(new Cube(i, j, k, subvolumeSize), densityMap);
+				calculateDensityForSubvolume(new Cube(i, j, k, subvolumeWidth), densityMap);
 			}
 		}
 	}
@@ -48,15 +58,16 @@ void DensityEstimator::calculateBoundingVolume(std::vector<Shape>* shapes)
 	}
 }
 
-void DensityEstimator::calculateDensityForSubvolume(Cube* subvolume, std::map<Vertex, float> densityMap)
+void DensityEstimator::calculateDensityForSubvolume(Cube* subvolume, std::map<Vertex, float, CmpVertex>* densityMap)
 {
-	int s;
+	unsigned int s;
 
 	// count bacteria in subvolume
 	int numBacteria = 0;
 	for(s = 0; s < shapes->size(); s++)
 	{
-		if(subvolume->contains(shapes->at(s)))
+		Shape shape = shapes->at(s);
+		if(subvolume->contains(shape))
 		{
 			numBacteria++;
 		}

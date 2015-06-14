@@ -50,3 +50,18 @@ void Shape::setFaces(std::vector<TFace>* newFaces)
 	delete faces;
 	this->faces = newFaces;
 }
+
+float Shape::getX()
+{
+	return x;
+}
+
+float Shape::getY()
+{
+	return y;
+}
+
+float Shape::getZ()
+{
+	return z;
+}

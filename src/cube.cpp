@@ -22,9 +22,9 @@ Cube::Cube(float x, float y, float z, float w) : Shape(x, y, z)
 
 }
 
-bool Cube::contains(Shape* shape)
+bool Cube::contains(Shape& shape)
 {
-	return shape->getX() >= this->minX && shape->getX() <= this->maxX &&
-		   shape->getY() >= this->minY && shape->getY() <= this->maxY &&
-		   shape->getZ() >= this->minZ && shape->getZ() <= this->maxZ;
+	return shape.getX() >= this->minX && shape.getX() <= this->maxX &&
+		   shape.getY() >= this->minY && shape.getY() <= this->maxY &&
+		   shape.getZ() >= this->minZ && shape.getZ() <= this->maxZ;
 }
