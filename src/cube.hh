@@ -3,9 +3,7 @@
 
 #include "shape.hh"
 
-#include <iostream>
-
-class Cube : public Shape
+class Cube
 {
 	public:
 
@@ -13,11 +11,16 @@ class Cube : public Shape
 
 		bool contains(Shape& shape);
 
+		float getX();
+		float getY();
+		float getZ();
+
 	private:
 		float width;
 		float minX, maxX;
 		float minY, maxY;
 		float minZ, maxZ;
+		float x, y, z;
 };
 
 #endif

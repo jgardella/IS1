@@ -14,12 +14,15 @@ std::map<Vertex, float, CmpVertex>* DensityEstimator::estimate(std::string csvfi
 {
 	float i, j, k;
 
+	// parse shapes and calcualte bounding box
 	shapes = CSVParser::parseCSV(csvfile, 0, 35, 60, 48);
 	calculateBoundingVolume(shapes);
 
+	// calculate size and width of subvolume cubes based on bounding box
 	subvolumeSize = ((maxX - minX) * (maxY - minY) * (maxZ - minZ)) / volumeRatio;
 	subvolumeWidth = std::cbrt(subvolumeSize);
 
+	// iterate through subvolumes and calculate density for each
 	std::map<Vertex, float, CmpVertex>* densityMap = new std::map<Vertex, float, CmpVertex>();
 	for(i = minX; i < maxX; i += subvolumeWidth)
 	{
