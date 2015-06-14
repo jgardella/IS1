@@ -6,13 +6,13 @@
 
 int main(int argc, const char* argv [])
 {
-	if(argc < 3)
+	if(argc < 4)
 	{
-		std::cout << "usage: ./test <csvfile> <volumeRatio>\n";
+		std::cout << "usage: ./test <csvfile> <volumeRatio> <overlap>\n";
 	}
 	else
 	{
-		std::map<Vertex, float, CmpVertex>* densityMap = DensityEstimator::estimate(argv[1], std::atoi(argv[2]));
+		std::map<Vertex, float, CmpVertex>* densityMap = DensityEstimator::estimate(argv[1], std::atoi(argv[2]), std::atoi(argv[3]));
 		for(auto iter : *densityMap)
 		{
 			Vertex v = iter.first;

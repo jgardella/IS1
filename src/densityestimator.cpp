@@ -10,7 +10,7 @@ float DensityEstimator::subvolumeSize;
 float DensityEstimator::subvolumeWidth;
 std::vector<Shape>* DensityEstimator::shapes;
 
-std::map<Vertex, float, CmpVertex>* DensityEstimator::estimate(std::string csvfile, int volumeRatio)
+std::map<Vertex, float, CmpVertex>* DensityEstimator::estimate(std::string csvfile, int volumeRatio, int overlap)
 {
 	float i, j, k;
 
@@ -24,11 +24,11 @@ std::map<Vertex, float, CmpVertex>* DensityEstimator::estimate(std::string csvfi
 
 	// iterate through subvolumes and calculate density for each
 	std::map<Vertex, float, CmpVertex>* densityMap = new std::map<Vertex, float, CmpVertex>();
-	for(i = minX; i < maxX; i += subvolumeWidth)
+	for(i = minX; i < maxX; i += subvolumeWidth / (overlap + 1))
 	{
-		for(j = minY; j < maxY; j += subvolumeWidth)
+		for(j = minY; j < maxY; j += subvolumeWidth / (overlap + 1))
 		{
-			for(k = minZ; k < maxZ; k += subvolumeWidth)
+			for(k = minZ; k < maxZ; k += subvolumeWidth / (overlap + 1))
 			{
 				calculateDensityForSubvolume(new Cube(i, j, k, subvolumeWidth), densityMap);
 			}
