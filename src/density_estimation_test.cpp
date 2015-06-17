@@ -12,7 +12,7 @@ int main(int argc, const char* argv [])
 	}
 	else
 	{
-		std::map<Vertex, float, CmpVertex>* densityMap = DensityEstimator::estimate(argv[1], std::atoi(argv[2]), std::atoi(argv[3]));
+		std::map<Vertex, float, CmpVertex>* densityMap = DensityEstimator::estimate(argv[1], std::atof(argv[2]), std::atof(argv[3]));
 		for(auto iter : *densityMap)
 		{
 			Vertex v = iter.first;
