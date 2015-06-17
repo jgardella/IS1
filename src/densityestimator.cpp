@@ -18,11 +18,11 @@ std::map<Vertex, float, CmpVertex>* DensityEstimator::estimate(std::string csvfi
 
 	// iterate through subvolumes and calculate density for each
 	std::map<Vertex, float, CmpVertex>* densityMap = new std::map<Vertex, float, CmpVertex>();
-	for(i = minX; i < maxX; i += resolution)
+	for(i = minX; i < maxX + subvolumeWidth; i += resolution)
 	{
-		for(j = minY; j < maxY; j += resolution)
+		for(j = minY; j < maxY + subvolumeWidth; j += resolution)
 		{
-			for(k = minZ; k < maxZ; k += resolution)
+			for(k = minZ; k < maxZ + subvolumeWidth; k += resolution)
 			{
 				calculateDensityForSubvolume(new Cube(i, j, k, subvolumeWidth), densityMap);
 			}
