@@ -15,12 +15,11 @@ class DensityEstimator
 		// Calculates the density of points in the given csv file, using the given volume size.
 		// Parameters:
 		// std::string csvfile - the csv file to estimate density for
-		// int volumeRatio - the volume size to use for the density estimation. for example, if the
-		//                  overal size of the dataset is 1000 u^3, and the volumeRatio is given as
-		// 					10, then each volume will be 100u^3, and there will be 100 volumes
+		// float subvolmeWidth - width of the subvolumes (in meters)
+		// float resolution - spacing between the subvolume centers (in meters)
 		// Returns a mapping from the center point of each volume used to the density estimate
 		// for that volume.
-		static std::map<Vertex, float, CmpVertex>* estimate(std::string csvfile, int subvolumeWidth, int resolution);
+		static std::map<Vertex, float, CmpVertex>* estimate(std::string csvfile, float subvolumeWidth, float resolution);
 
 	private:
 		static float minX, maxX;

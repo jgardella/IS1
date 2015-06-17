@@ -8,7 +8,7 @@ float DensityEstimator::minZ;
 float DensityEstimator::maxZ;
 std::vector<Shape>* DensityEstimator::shapes;
 
-std::map<Vertex, float, CmpVertex>* DensityEstimator::estimate(std::string csvfile, int subvolumeWidth, int resolution)
+std::map<Vertex, float, CmpVertex>* DensityEstimator::estimate(std::string csvfile, float subvolumeWidth, float resolution)
 {
 	float i, j, k;
 
