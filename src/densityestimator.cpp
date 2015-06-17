@@ -6,11 +6,9 @@ float DensityEstimator::minY;
 float DensityEstimator::maxY;
 float DensityEstimator::minZ;
 float DensityEstimator::maxZ;
-float DensityEstimator::subvolumeSize;
-float DensityEstimator::subvolumeWidth;
 std::vector<Shape>* DensityEstimator::shapes;
 
-std::map<Vertex, float, CmpVertex>* DensityEstimator::estimate(std::string csvfile, int volumeRatio, int overlap)
+std::map<Vertex, float, CmpVertex>* DensityEstimator::estimate(std::string csvfile, int subvolumeWidth, int resolution)
 {
 	float i, j, k;
 
@@ -18,17 +16,13 @@ std::map<Vertex, float, CmpVertex>* DensityEstimator::estimate(std::string csvfi
 	shapes = CSVParser::parseCSV(csvfile, 0, 35, 60, 48);
 	calculateBoundingVolume(shapes);
 
-	// calculate size and width of subvolume cubes based on bounding box
-	subvolumeSize = ((maxX - minX) * (maxY - minY) * (maxZ - minZ)) / volumeRatio;
-	subvolumeWidth = std::cbrt(subvolumeSize);
-
 	// iterate through subvolumes and calculate density for each
 	std::map<Vertex, float, CmpVertex>* densityMap = new std::map<Vertex, float, CmpVertex>();
-	for(i = minX; i < maxX; i += subvolumeWidth / (overlap + 1))
+	for(i = minX; i < maxX; i += resolution)
 	{
-		for(j = minY; j < maxY; j += subvolumeWidth / (overlap + 1))
+		for(j = minY; j < maxY; j += resolution)
 		{
-			for(k = minZ; k < maxZ; k += subvolumeWidth / (overlap + 1))
+			for(k = minZ; k < maxZ; k += resolution)
 			{
 				calculateDensityForSubvolume(new Cube(i, j, k, subvolumeWidth), densityMap);
 			}
@@ -78,5 +72,5 @@ void DensityEstimator::calculateDensityForSubvolume(Cube* subvolume, std::map<Ve
 
 	// add calculated density to map
 	densityMap->insert(std::pair<Vertex, float>(*(new Vertex(subvolume->getX(), subvolume->getY(), subvolume->getZ())),
-												((float) numBacteria) /  subvolumeSize));
+												((float) numBacteria) /  subvolume->getVolume()));
 }

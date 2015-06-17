@@ -14,6 +14,7 @@ class Cube
 		float getX();
 		float getY();
 		float getZ();
+		float getVolume();
 
 	private:
 		float width;

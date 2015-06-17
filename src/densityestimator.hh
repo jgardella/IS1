@@ -20,14 +20,12 @@ class DensityEstimator
 		// 					10, then each volume will be 100u^3, and there will be 100 volumes
 		// Returns a mapping from the center point of each volume used to the density estimate
 		// for that volume.
-		static std::map<Vertex, float, CmpVertex>* estimate(std::string csvfile, int volumeRatio, int overlap);
+		static std::map<Vertex, float, CmpVertex>* estimate(std::string csvfile, int subvolumeWidth, int resolution);
 
 	private:
 		static float minX, maxX;
 		static float minY, maxY;
 		static float minZ, maxZ;
-		static float subvolumeSize;
-		static float subvolumeWidth;
 
 		static std::vector<Shape>* shapes;
 

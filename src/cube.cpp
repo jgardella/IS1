@@ -36,3 +36,8 @@ float Cube::getZ()
 {
 	return z;
 }
+
+float Cube::getVolume()
+{
+	return width * width;
+}
