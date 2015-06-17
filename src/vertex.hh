@@ -22,7 +22,19 @@ struct CmpVertex
 {
 	bool operator()(Vertex const& lhs, Vertex const& rhs) const
 	{
-		return lhs.z < rhs.z;
+		if(lhs.x < rhs.x)
+			return false;
+		else if(lhs.x > rhs.x)
+			return true;
+		if(lhs.y < rhs.y)
+			return false;
+		else if(lhs.y > rhs.y)
+			return true;
+		if(lhs.z < rhs.z)
+			return false;
+		else if(lhs.z > rhs.z)
+			return true;
+		return true;
 	}
 };
 
