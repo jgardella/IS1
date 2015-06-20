@@ -5,6 +5,8 @@ class Vertex
 {
 	public:
 
+		Vertex();
+
 		// Defines a vertex with the given coordinates.
 		// Parameters:
 		// float x - x coordinate of vertex

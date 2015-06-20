@@ -4,6 +4,7 @@
 #include <map>
 #include <vector>
 #include <cfloat>
+#include <utility>
 #include "shape.hh"
 #include "csvparser.hh"
 #include "cube.hh"
@@ -19,7 +20,7 @@ class DensityEstimator
 		// float resolution - spacing between the subvolume centers (in meters)
 		// Returns a mapping from the center point of each volume used to the density estimate
 		// for that volume.
-		static std::map<Vertex, float, CmpVertex>* estimate(std::string csvfile, float subvolumeWidth, float resolution);
+		static std::pair<Vertex, float>*** estimate(std::string csvfile, float subvolumeWidth, float resolution, int& xSize, int& ySize, int& zSize);
 
 	private:
 		static float minX, maxX;
@@ -30,7 +31,7 @@ class DensityEstimator
 
 		static void calculateBoundingVolume(std::vector<Shape>* shapes);
 
-		static void calculateDensityForSubvolume(Cube* subvolume, std::map<Vertex, float, CmpVertex>* densityMap);
+		static void calculateDensityForSubvolume(Cube* subvolume, std::pair<Vertex, float>*** densityMap, int xIdx, int yIdx, int zIdx);
 };
 
 #endif

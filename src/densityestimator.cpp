@@ -8,27 +8,44 @@ float DensityEstimator::minZ;
 float DensityEstimator::maxZ;
 std::vector<Shape>* DensityEstimator::shapes;
 
-std::map<Vertex, float, CmpVertex>* DensityEstimator::estimate(std::string csvfile, float subvolumeWidth, float resolution)
+std::pair<Vertex, float>*** DensityEstimator::estimate(std::string csvfile, float subvolumeWidth, float resolution, int& xSize, int& ySize, int& zSize)
 {
 	float i, j, k;
+	int xIdx, yIdx, zIdx;
 
 	// parse shapes and calcualte bounding box
 	shapes = CSVParser::parseCSV(csvfile, 0, 35, 60, 48);
 	calculateBoundingVolume(shapes);
 
-	// iterate through subvolumes and calculate density for each
-	std::map<Vertex, float, CmpVertex>* densityMap = new std::map<Vertex, float, CmpVertex>();
-	for(i = minX; i < maxX + subvolumeWidth; i += resolution)
+	// create 3d array for holding density estimations
+	int xRange = (int)((maxX + subvolumeWidth - minX) / resolution) + 1;
+	int yRange = (int)((maxY + subvolumeWidth - minY) / resolution) + 1;
+	int zRange = (int)((maxZ + subvolumeWidth - minZ) / resolution) + 1;
+	std::pair<Vertex, float>*** densityMap = new std::pair<Vertex, float>**[xRange];
+	for(xIdx = 0; xIdx < xRange; xIdx++)
 	{
-		for(j = minY; j < maxY + subvolumeWidth; j += resolution)
+		densityMap[xIdx] = new std::pair<Vertex, float>*[yRange];
+		for(yIdx = 0; yIdx < yRange; yIdx++)
 		{
-			for(k = minZ; k < maxZ + subvolumeWidth; k += resolution)
+			densityMap[xIdx][yIdx] = new std::pair<Vertex, float>[zRange];
+		}
+	}
+
+	// iterate through subvolumes and calculate density for each
+	for(i = minX, xIdx = 0; i < maxX + subvolumeWidth; i += resolution, xIdx++)
+	{
+		for(j = minY, yIdx = 0; j < maxY + subvolumeWidth; j += resolution, yIdx++)
+		{
+			for(k = minZ, zIdx = 0; k < maxZ + subvolumeWidth; k += resolution, zIdx++)
 			{
-				calculateDensityForSubvolume(new Cube(i, j, k, subvolumeWidth), densityMap);
+				calculateDensityForSubvolume(new Cube(i, j, k, subvolumeWidth), densityMap, xIdx, yIdx, zIdx);
 			}
 		}
 	}
 
+	xSize = xRange;
+	ySize = yRange;
+	zSize = zRange;
 	return densityMap;
 }
 
@@ -55,7 +72,7 @@ void DensityEstimator::calculateBoundingVolume(std::vector<Shape>* shapes)
 	}
 }
 
-void DensityEstimator::calculateDensityForSubvolume(Cube* subvolume, std::map<Vertex, float, CmpVertex>* densityMap)
+void DensityEstimator::calculateDensityForSubvolume(Cube* subvolume, std::pair<Vertex, float>*** densityMap, int xIdx, int yIdx, int zIdx)
 {
 	unsigned int s;
 
@@ -71,6 +88,6 @@ void DensityEstimator::calculateDensityForSubvolume(Cube* subvolume, std::map<Ve
 	}
 
 	// add calculated density to map
-	densityMap->insert(std::pair<Vertex, float>(*(new Vertex(subvolume->getX(), subvolume->getY(), subvolume->getZ())),
-												((float) numBacteria) /  subvolume->getVolume()));
+	densityMap[xIdx][yIdx][zIdx] = std::pair<Vertex, float>(*(new Vertex(subvolume->getX(), subvolume->getY(), subvolume->getZ())),
+												((float) numBacteria) /  subvolume->getVolume());
 }

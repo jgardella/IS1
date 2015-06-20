@@ -2,49 +2,81 @@
 
 Shape* DensityVisualizer::pointCloud;
 float DensityVisualizer::threshold;
-std::map<Vertex, float, CmpVertex>* DensityVisualizer::densityMap;
+std::pair<Vertex, float>*** DensityVisualizer::densityMap;
 
-Shape* DensityVisualizer::thresholdDensity(std::map<Vertex, float, CmpVertex>* densityMap, float threshold, float subvolumeWidth)
+Shape* DensityVisualizer::thresholdDensity(std::pair<Vertex, float>*** densityMap, int xSize, int ySize, int zSize, float threshold)
 {
+	int i, j, k;
 	pointCloud = new Shape(0, 0, 0);
 	DensityVisualizer::threshold = threshold;
 	DensityVisualizer::densityMap = densityMap;
 
-	for(auto iter : *densityMap)
+	for(i = 0; i < xSize; i++)
 	{
-		Vertex vertex = iter.first;
-
-		std::map<Vertex, float, CmpVertex>::iterator it = densityMap->find(Vertex(vertex.x, vertex.y, vertex.z + subvolumeWidth));
-		addPointIfValid(iter, it);
-
-		it = densityMap->find(Vertex(vertex.x, vertex.y, vertex.z - subvolumeWidth));
-		addPointIfValid(iter, it);
-
-		it = densityMap->find(Vertex(vertex.x, vertex.y + subvolumeWidth, vertex.z));
-		addPointIfValid(iter, it);
-
-		it = densityMap->find(Vertex(vertex.x, vertex.y - subvolumeWidth, vertex.z));
-		addPointIfValid(iter, it);
-
-		it = densityMap->find(Vertex(vertex.x + subvolumeWidth, vertex.y, vertex.z));
-		addPointIfValid(iter, it);
-
-		it = densityMap->find(Vertex(vertex.x - subvolumeWidth, vertex.y, vertex.z));
-		addPointIfValid(iter, it);
+		for(j = 0; j < ySize; j++)
+		{
+			for(k = 0; k < zSize; k++)
+			{
+				addPointIfValid(i, j, k, xSize, ySize, zSize);
+			}
+		}
 	}
 
 	return pointCloud;
 }
 
-void DensityVisualizer::addPointIfValid(std::pair<Vertex, float> i1, std::map<Vertex, float, CmpVertex>::iterator i2)
+void DensityVisualizer::addPointIfValid(int i, int j, int k, int xSize, int ySize, int zSize)
 {
-	if(i2 != densityMap->end())
+	if(i > 0)
 	{
-		std::cout << "Valid\n";
-		if((i1.second < threshold && i2->second > threshold) || (i1.second > threshold && i2->second < threshold))
+		if(areDensitiesValid(densityMap[i][j][k].second, densityMap[i - 1][j][k].second))
 		{
-			std::cout << "On threshold\n";
-			pointCloud->addVertex(*(new Vertex(i1.first, (Vertex&)i2->first)), true);
+			pointCloud->addVertex(*(new Vertex(densityMap[i][j][k].first, densityMap[i - 1][j][k].first)), true);
 		}
 	}
+
+	if(i < xSize - 1)
+	{
+		if(areDensitiesValid(densityMap[i][j][k].second, densityMap[i + 1][j][k].second))
+		{
+			pointCloud->addVertex(*(new Vertex(densityMap[i][j][k].first, densityMap[i + 1][j][k].first)), true);
+		}
+	}
+
+	if(j > 0)
+	{
+		if(areDensitiesValid(densityMap[i][j][k].second, densityMap[i][j - 1][k].second))
+		{
+			pointCloud->addVertex(*(new Vertex(densityMap[i][j][k].first, densityMap[i][j - 1][k].first)), true);
+		}
+	}
+
+	if(j < ySize - 1)
+	{
+		if(areDensitiesValid(densityMap[i][j][k].second, densityMap[i][j + 1][k].second))
+		{
+			pointCloud->addVertex(*(new Vertex(densityMap[i][j][k].first, densityMap[i][j + 1][k].first)), true);
+		}
+	}
+
+	if(k > 0)
+	{
+		if(areDensitiesValid(densityMap[i][j][k].second, densityMap[i][j][k - 1].second))
+		{
+			pointCloud->addVertex(*(new Vertex(densityMap[i][j][k].first, densityMap[i][j][k - 1].first)), true);
+		}
+	}
+
+	if(k < zSize - 1)
+	{
+		if(areDensitiesValid(densityMap[i][j][k].second, densityMap[i][j][k + 1].second))
+		{
+			pointCloud->addVertex(*(new Vertex(densityMap[i][j][k].first, densityMap[i][j][k + 1].first)), true);
+		}
+	}
+}
+
+bool DensityVisualizer::areDensitiesValid(float d1, float d2)
+{
+	return (d1 < threshold && d2 > threshold) || (d1 > threshold && d2 < threshold);
 }

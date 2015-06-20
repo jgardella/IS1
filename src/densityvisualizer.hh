@@ -10,14 +10,16 @@
 class DensityVisualizer
 {
 	public:
-		static Shape* thresholdDensity(std::map<Vertex, float, CmpVertex>* densityMap, float threshold, float subvolumeWidth);
+		static Shape* thresholdDensity(std::pair<Vertex, float>*** densityMap, int xSize, int ySize, int zSize, float threshold);
 
 	private:
 		static Shape* pointCloud;
 		static float threshold;
-		static std::map<Vertex, float, CmpVertex>* densityMap;
+		static std::pair<Vertex, float>*** densityMap;
 
-		static void addPointIfValid(std::pair<Vertex, float> i1, std::map<Vertex, float, CmpVertex>::iterator i2);
+		static void addPointIfValid(int i, int j, int k, int xSize, int ySize, int zSize);
+
+		static bool areDensitiesValid(float d1, float d2);
 
 
 };

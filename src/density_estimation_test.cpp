@@ -14,16 +14,27 @@ int main(int argc, const char* argv [])
 	}
 	else
 	{
-		std::map<Vertex, float, CmpVertex>* densityMap = DensityEstimator::estimate(argv[1], std::atof(argv[2]), std::atof(argv[3]));
-		for(auto iter : *densityMap)
+		int i, j, k;
+		int xSize;
+		int ySize;
+		int zSize;
+		std::pair<Vertex, float>*** densityMap = DensityEstimator::estimate(argv[1], std::atof(argv[2]), std::atof(argv[3]), xSize, ySize, zSize);
+		for(i = 0; i < xSize; i++)
 		{
-			Vertex v = iter.first;
-			if(iter.second > 0)
+			for(j = 0; j < ySize; j++)
 			{
-				std::cout << "(" << v.x << ", " << v.y << ", " << v.z << ") --> " << iter.second << '\n';
+				for(k = 0; k < zSize; k++)
+				{
+					Vertex v = densityMap[i][j][k].first;
+					float d = densityMap[i][j][k].second;
+					if(d != 0)
+					{
+						std::cout << "(" << v.x << ", " << v.y << ", " << v.z << ") --> " << d << '\n';
+					}
+				}
 			}
 		}
-		Shape* pointCloud = DensityVisualizer::thresholdDensity(densityMap, .000025, std::atof(argv[2]));
+		Shape* pointCloud = DensityVisualizer::thresholdDensity(densityMap, xSize, ySize, zSize, .000025);
 		PlyWriter::write(*pointCloud, "ply/pointCloud.ply");
 	}
 	return 0;
