@@ -1,4 +1,6 @@
 #include "densityestimator.hh"
+#include "densityvisualizer.hh"
+#include "plywriter.hh"
 #include "vertex.hh"
 
 #include <iostream>
@@ -16,8 +18,13 @@ int main(int argc, const char* argv [])
 		for(auto iter : *densityMap)
 		{
 			Vertex v = iter.first;
-			std::cout << "(" << v.x << ", " << v.y << ", " << v.z << ") --> " << iter.second << '\n';
+			if(iter.second > 0)
+			{
+				std::cout << "(" << v.x << ", " << v.y << ", " << v.z << ") --> " << iter.second << '\n';
+			}
 		}
+		Shape* pointCloud = DensityVisualizer::thresholdDensity(densityMap, .000025, std::atof(argv[2]));
+		PlyWriter::write(*pointCloud, "ply/pointCloud.ply");
 	}
 	return 0;
 }

@@ -12,6 +12,12 @@ class Vertex
 		// flaot z - z coordinate of vertex
 		Vertex(float x, float y, float z);
 
+		// Defines a new vertex that is the midpoint of the given vertices.
+		// Parameters:
+		// Vertex& v1 - the first vertex
+		// Vertex& v2 - the second vertex
+		Vertex(Vertex& v1, Vertex& v2);
+
 		float x;
 		float y;
 		float z;
