@@ -11,8 +11,18 @@ class Vertex
 		// Parameters:
 		// float x - x coordinate of vertex
 		// float y - y coordinate of vertex
-		// flaot z - z coordinate of vertex
+		// float z - z coordinate of vertex
 		Vertex(float x, float y, float z);
+
+		// Defines a vertex with the given coordinates and normal.
+		// Parameters:
+		// float x - x coordinate of vertex
+		// float y - y coordinate of vertex
+		// float z - z coordinate of vertex
+		// float nx - x component of normal
+		// float ny - y component of normal
+		// float nz - z component of normal
+		Vertex(float x, float y, float z, float nx, float ny, float nz);
 
 		// Defines a new vertex that is the midpoint of the given vertices.
 		// Parameters:
@@ -20,9 +30,14 @@ class Vertex
 		// Vertex& v2 - the second vertex
 		Vertex(Vertex& v1, Vertex& v2);
 
+		bool hasNormals;
 		float x;
 		float y;
 		float z;
+
+		float nx;
+		float ny;
+		float nz;
 
 };
 

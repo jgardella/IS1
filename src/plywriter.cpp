@@ -41,6 +41,12 @@ void PlyWriter::writeHeader(Shape& shape, std::ofstream& file)
 	file << "property float x\n";
 	file << "property float y\n";
 	file << "property float z\n";
+	if(shape.getVertices()->size() > 0 && shape.getVertices()->at(0).hasNormals) // add normal component properties if shape contains normals
+	{
+		file << "property float nx\n";
+		file << "property float ny\n";
+		file << "property float nz\n";
+	}
 	file << "element face " + std::to_string(shape.getFaces()->size()) + "\n";
 	file << "property list uchar int vertex_indices\n";
 	file << "end_header\n";
@@ -63,6 +69,12 @@ void PlyWriter::writeShapesHeader(std::vector<Shape>* shapes, std::ofstream& fil
 	file << "property float x\n";
 	file << "property float y\n";
 	file << "property float z\n";
+	if(shapes->at(0).getVertices()->size() > 0 && shapes->at(0).getVertices()->at(0).hasNormals) // add normal component properties if shape contains normals
+	{
+		file << "property float nx\n";
+		file << "property float ny\n";
+		file << "property float nz\n";
+	}
 	file << "element face " + std::to_string(numFaces) + "\n";
 	file << "property list uchar int vertex_indices\n";
 	file << "end_header\n";
@@ -74,7 +86,12 @@ void PlyWriter::writeVertices(Shape& shape, std::ofstream& file)
 	for(unsigned int i = 0; i < vertices->size(); i++)
 	{
 		Vertex v = vertices->at(i);
-		file << std::to_string(v.x) + " " + std::to_string(v.y) + " " + std::to_string(v.z) + "\n";
+		file << std::to_string(v.x) + " " + std::to_string(v.y) + " " + std::to_string(v.z);
+		if(v.hasNormals) // write normal components if vertex has them
+		{
+			file << " " << std::to_string(v.nx) << " " << std::to_string(v.ny) << " " << std::to_string(v.nz);
+		}
+		file << '\n';
 	}
 }
 
