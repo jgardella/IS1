@@ -37,5 +37,18 @@ Vertex::Vertex(Vertex& v1, Vertex& v2)
 	this->y = (v1.y + v2.y) / 2;
 	this->z = (v1.z + v2.z) / 2;
 
+	hasNormals = false;
+}
+
+Vertex::Vertex(Vertex& v1, Vertex& v2, float nx, float ny, float nz)
+{
+	this->x = (v1.x + v2.x) / 2;
+	this->y = (v1.y + v2.y) / 2;
+	this->z = (v1.z + v2.z) / 2;
+
+	this->nx = nx;
+	this->ny = ny;
+	this->nz = nz;
+
 	hasNormals = true;
 }

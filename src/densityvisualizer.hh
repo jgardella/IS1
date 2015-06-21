@@ -19,7 +19,7 @@ class DensityVisualizer
 
 		static void addPointIfValid(int i, int j, int k, int xSize, int ySize, int zSize);
 
-		static bool areDensitiesValid(float d1, float d2);
+		static int areDensitiesValid(float d1, float d2);
 
 
 };

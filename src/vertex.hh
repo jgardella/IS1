@@ -30,6 +30,15 @@ class Vertex
 		// Vertex& v2 - the second vertex
 		Vertex(Vertex& v1, Vertex& v2);
 
+		// Defines a new vertex that is the midpoint of the given vertices.
+		// Parameters:
+		// Vertex& v1 - the first vertex
+		// Vertex& v2 - the second vertex
+		// float nx - x component of normal
+		// float ny - y component of normal
+		// float nz - z component of normal
+		Vertex(Vertex& v1, Vertex& v2, float nx, float ny, float nz);
+
 		bool hasNormals;
 		float x;
 		float y;
