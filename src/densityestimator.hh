@@ -9,6 +9,7 @@
 #include "csvparser.hh"
 #include "cube.hh"
 #include "vertex.hh"
+#include "util.hh"
 
 class DensityEstimator
 {
@@ -28,8 +29,6 @@ class DensityEstimator
 		static float minZ, maxZ;
 
 		static std::vector<Shape>* shapes;
-
-		static void calculateBoundingVolume(std::vector<Shape>* shapes);
 
 		static void calculateDensityForSubvolume(Cube* subvolume, std::pair<Vertex, float>*** densityMap, int xIdx, int yIdx, int zIdx);
 };

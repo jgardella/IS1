@@ -15,7 +15,7 @@ std::pair<Vertex, float>*** DensityEstimator::estimate(std::string csvfile, floa
 
 	// parse shapes and calcualte bounding box
 	shapes = CSVParser::parseCSV(csvfile, 0, 35, 60, 48);
-	calculateBoundingVolume(shapes);
+	Util::calculateBoundingVolume(shapes, minX, minY, minZ, maxX, maxY, maxZ);
 
 	// create 3d array for holding density estimations
 	int xRange = (int)((maxX + subvolumeWidth - minX) / resolution) + 1;
@@ -47,29 +47,6 @@ std::pair<Vertex, float>*** DensityEstimator::estimate(std::string csvfile, floa
 	ySize = yRange;
 	zSize = zRange;
 	return densityMap;
-}
-
-void DensityEstimator::calculateBoundingVolume(std::vector<Shape>* shapes)
-{
-	minX = FLT_MAX, minY = FLT_MAX, minZ = FLT_MAX;
-	maxX = FLT_MIN, maxY = FLT_MIN, maxZ = FLT_MIN;
-	for(unsigned int i = 0; i < shapes->size(); i++)
-	{
-		Shape shape = shapes->at(i);
-		if(shape.getX() < minX)
-			minX = shape.getX();
-		if(shape.getY() < minY)
-			minY = shape.getY();
-		if(shape.getZ() < minZ)
-			minZ = shape.getZ();
-
-		if(shape.getX() > maxX)
-			maxX = shape.getX();
-		if(shape.getY() > maxY)
-			maxY = shape.getY();
-		if(shape.getZ() > maxZ)
-			maxZ = shape.getZ();
-	}
 }
 
 void DensityEstimator::calculateDensityForSubvolume(Cube* subvolume, std::pair<Vertex, float>*** densityMap, int xIdx, int yIdx, int zIdx)
