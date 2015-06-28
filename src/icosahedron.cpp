@@ -122,3 +122,8 @@ int Icosahedron::createMiddlePoint(int v1Idx, int v2Idx)
 	refinementMap->insert(std::make_pair(std::make_pair(v1Idx, v2Idx), storedIdx));
 	return storedIdx;
 }
+
+float Icosahedron::getRadius()
+{
+	return radius;
+}

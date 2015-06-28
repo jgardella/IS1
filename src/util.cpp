@@ -24,3 +24,16 @@ void Util::calculateBoundingVolume(std::vector<Shape>* shapes,
 			maxZ = shape.getZ();
 	}
 }
+
+void Util::calculateSphereBoundingBox(Icosahedron& sphere,
+		float& minX, float& minY, float& minZ,
+		float& maxX, float& maxY, float& maxZ)
+{
+	minX = sphere.getX() - sphere.getRadius();
+	minY = sphere.getY() - sphere.getRadius();
+	minZ = sphere.getZ() - sphere.getRadius();
+
+	maxX = sphere.getX() + sphere.getRadius();
+	maxY = sphere.getY() + sphere.getRadius();
+	maxZ = sphere.getZ() + sphere.getRadius();
+}

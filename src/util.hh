@@ -4,6 +4,7 @@
 #include <vector>
 #include <cfloat>
 #include "shape.hh"
+#include "icosahedron.hh"
 
 class Util
 {
@@ -11,6 +12,10 @@ class Util
 		static void calculateBoundingVolume(std::vector<Shape>* shapes,
 				float& minX, float& minY, float& minZ,
 				float& maxX, float& maxY, float& maxZ);
+
+		static void calculateSphereBoundingBox(Icosahedron& sphere,
+			float& minX, float& minY, float& minZ,
+			float& maxX, float& maxY, float& maxZ);
 };
 
 #endif

@@ -12,6 +12,8 @@ class Icosahedron : public Shape
 
 		Icosahedron(float x, float y, float z, float radius, int resolution);
 
+		float getRadius();
+
 	private:
 		std::map<std::pair<int, int>, int>* refinementMap;
 		float radius;

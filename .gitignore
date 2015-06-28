@@ -29,3 +29,8 @@
 
 # Data
 /data
+/ply
+
+# vim
+*.swp
+
