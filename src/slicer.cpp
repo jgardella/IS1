@@ -5,20 +5,21 @@ void Slicer::writeSlices(std::vector<Shape*>* shapes, int pixelWidth, int pixelH
 		std::string outputDir, std::string filename)
 {
 	unsigned int i;
+	int j;
 
 	unsigned char*** grid = create3DGrid(numSlices, imageWidth, imageHeight);
 
 	// set occupied parts of grid based on shape list
-	for(i = 0; i < shapes->size(); i++)
+	for(i = 0; (unsigned int) i < shapes->size(); i++)
 	{
 		Icosahedron* s = (Icosahedron*) shapes->at(i); // assume all spheres
 		addSphereToGrid(s, grid, numSlices, imageWidth, imageHeight, sliceThickness, pixelWidth, pixelHeight);
 	}
 
 	// write slice images to disk
-	for(i = 0; i < numSlices; i++)
+	for(j = 0; j < numSlices; i++)
 	{
-
+		writeSlice(grid[j], j, imageWidth, imageHeight, outputDir, filename);
 	}
 }
 
@@ -68,9 +69,31 @@ void Slicer::addSphereToGrid(Icosahedron* sphere, unsigned char*** grid,
 				if(sphere->contains(x, y, z))
 				{
 					// if sphere contains the given point, set it as occupied in the grid
+					grid[(int) z / sliceThickness][(int) x / pixelWidth][(int) y / pixelHeight] = 255;
 				}
 			}
 		}
 	}
 
+}
+
+void Slicer::writeSlice(unsigned char** slice, int sliceNum, int imageWidth, int imageHeight, std::string outputDir, std::string filename)
+{
+	int i, j;
+	char* fname = (char*) (outputDir + "/" + filename + std::to_string(sliceNum)).c_str();
+
+	// convert slice to 1d array
+	unsigned char* image = new unsigned char[imageWidth * imageHeight * 3];
+
+	for(i = 0; i < imageHeight; i++)
+	{
+		for(j = 0; j < imageWidth; j++)
+		{
+			image[3 * (j * imageWidth + i)] = slice[i][j];
+			image[3 * (j * imageWidth + i) + 1] = slice[i][j];
+			image[3 * (j * imageWidth + i) + 2] = slice[i][j];
+		}
+	}
+
+	write_pgm_Uimage(image, fname, imageWidth, imageHeight);
 }

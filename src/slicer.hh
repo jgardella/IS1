@@ -3,6 +3,7 @@
 
 #include "shape.hh"
 #include "util.hh"
+#include "ImageFunctions.h"
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -20,6 +21,8 @@ class Slicer
 		static void addSphereToGrid(Icosahedron* sphere, unsigned char*** grid,
 				int numSlices, int imageWidth, int imageHeight,
 				int sliceThickness, int pixelWidth, int pixelHeight);
+
+		static void writeSlice(unsigned char** slice, int sliceNum, int imageWidth, int imageHeight, std::string outputDir, std::string filename);
 
 };
 

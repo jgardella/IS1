@@ -14,7 +14,7 @@ using namespace std;
 unsigned char *read_pgm_image(char *fname, int *nx, int *ny)
 {
 	unsigned char *dummy;
-	int i_size, x, y, s;
+	int i_size, x, y;
 	ifstream fin;
 
 	fin.open(fname, ios::binary);
@@ -52,7 +52,6 @@ unsigned char *read_pgm_image(char *fname, int *nx, int *ny)
 	fin.getline(line, 50);
 	y = atoi(line);
 	fin.getline(line, 50);
-	s = atoi(line);
 //	cout << "x " << x << " y " << y << endl;
 	//cout << "s " << s << endl; // " t " << t << endl;
 	while('\n'==fin.peek())
@@ -70,7 +69,7 @@ unsigned char *read_pgm_image(char *fname, int *nx, int *ny)
 unsigned char *read_ppm_image(char *fname, int *nx, int *ny)
 {
 	unsigned char *dummy;
-	int i_size, x, y, s;
+	int i_size, x, y;
 	ifstream fin;
 
 	fin.open(fname, ios::binary);
@@ -97,7 +96,6 @@ unsigned char *read_ppm_image(char *fname, int *nx, int *ny)
 	fin.getline(line, 50);
 	y = atoi(line);
 	fin.getline(line, 50);
-	s = atoi(line);
 
 	//cout << "x " << x << " y " << y << endl;
 	//cout << "s " << s << endl; // " t " << t << endl;
