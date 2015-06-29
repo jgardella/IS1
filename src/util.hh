@@ -9,7 +9,7 @@
 class Util
 {
 	public:
-		static void calculateBoundingVolume(std::vector<Shape>* shapes,
+		static void calculateBoundingVolume(std::vector<Shape*>* shapes,
 				float& minX, float& minY, float& minZ,
 				float& maxX, float& maxY, float& maxZ);
 

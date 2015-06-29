@@ -6,7 +6,7 @@ float DensityEstimator::minY;
 float DensityEstimator::maxY;
 float DensityEstimator::minZ;
 float DensityEstimator::maxZ;
-std::vector<Shape>* DensityEstimator::shapes;
+std::vector<Shape*>* DensityEstimator::shapes;
 
 std::pair<Vertex, float>*** DensityEstimator::estimate(std::string csvfile, float subvolumeWidth, float resolution, int& xSize, int& ySize, int& zSize)
 {
@@ -57,8 +57,8 @@ void DensityEstimator::calculateDensityForSubvolume(Cube* subvolume, std::pair<V
 	int numBacteria = 0;
 	for(s = 0; s < shapes->size(); s++)
 	{
-		Shape shape = shapes->at(s);
-		if(subvolume->contains(shape))
+		Shape* shape = shapes->at(s);
+		if(subvolume->contains(*shape))
 		{
 			numBacteria++;
 		}

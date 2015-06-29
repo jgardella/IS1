@@ -14,6 +14,8 @@ class Icosahedron : public Shape
 
 		float getRadius();
 
+		bool contains(float x, float y, float z);
+
 	private:
 		std::map<std::pair<int, int>, int>* refinementMap;
 		float radius;

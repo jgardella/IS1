@@ -127,3 +127,8 @@ float Icosahedron::getRadius()
 {
 	return radius;
 }
+
+bool Icosahedron::contains(float x, float y, float z)
+{
+	return (x - this->x) * (x - this->x) + (y - this->y) * (y - this->y) + (z - this->z) * (z - this->z) <= this->radius * this->radius;
+}

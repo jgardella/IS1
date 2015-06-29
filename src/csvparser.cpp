@@ -1,12 +1,12 @@
 #include "csvparser.hh"
 
-std::vector<Shape>* CSVParser::parseCSV(std::string filename, int resolution, float minR, float maxR, float radius)
+std::vector<Shape*>* CSVParser::parseCSV(std::string filename, int resolution, float minR, float maxR, float radius)
 {
 	std::ifstream file(filename);
 	std::string line;
 	int i;
 	float x, y, z, r;
-	std::vector<Shape>* shapeList = new std::vector<Shape>();
+	std::vector<Shape*>* shapeList = new std::vector<Shape*>();
 	// read line
 	while(std::getline(file, line))
 	{
@@ -36,7 +36,7 @@ std::vector<Shape>* CSVParser::parseCSV(std::string filename, int resolution, fl
 		}
 		if(r > minR && r <  maxR)
 		{
-			shapeList->push_back(*new Icosahedron(x, y, z, radius, resolution));
+			shapeList->push_back(new Icosahedron(x, y, z, radius, resolution));
 		}
 	}
 	return shapeList;

@@ -1,6 +1,6 @@
 #include "util.hh"
 
-void Util::calculateBoundingVolume(std::vector<Shape>* shapes,
+void Util::calculateBoundingVolume(std::vector<Shape*>* shapes,
 		float& minX, float& minY, float& minZ,
 		float& maxX, float& maxY, float& maxZ)
 {
@@ -8,7 +8,7 @@ void Util::calculateBoundingVolume(std::vector<Shape>* shapes,
 	maxX = FLT_MIN, maxY = FLT_MIN, maxZ = FLT_MIN;
 	for(unsigned int i = 0; i < shapes->size(); i++)
 	{
-		Shape shape = shapes->at(i);
+		Shape shape = *shapes->at(i);
 		if(shape.getX() < minX)
 			minX = shape.getX();
 		if(shape.getY() < minY)

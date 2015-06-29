@@ -28,7 +28,7 @@ class DensityEstimator
 		static float minY, maxY;
 		static float minZ, maxZ;
 
-		static std::vector<Shape>* shapes;
+		static std::vector<Shape*>* shapes;
 
 		static void calculateDensityForSubvolume(Cube* subvolume, std::pair<Vertex, float>*** densityMap, int xIdx, int yIdx, int zIdx);
 };
