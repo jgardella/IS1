@@ -69,6 +69,7 @@ void Slicer::addSphereToGrid(Icosahedron* sphere, unsigned char*** grid,
 		int numSlices, int imageWidth, int imageHeight,
 		int sliceThickness, int pixelWidth, int pixelHeight)
 {
+	//std::cout << "Adding sphere at (" << sphere->getX() << ", " << sphere->getY() << ", " << sphere->getZ() << ")\n";
 	float x, y, z;
 
 	float sphereMinX, sphereMinY, sphereMinZ;
@@ -86,12 +87,13 @@ void Slicer::addSphereToGrid(Icosahedron* sphere, unsigned char*** grid,
 				if(sphere->intersectsCube(x, y, z, x + pixelWidth, y + pixelHeight, z + sliceThickness))
 				{
 					// if sphere contains the given point, set it as occupied in the grid
+					//std::cout << "Setting grid at [" << (int) z / sliceThickness << "][" << (int) x / pixelWidth << "][" << (int) y / pixelHeight << "] as occupied\n";
 					grid[(int) z / sliceThickness][(int) x / pixelWidth][(int) y / pixelHeight] = 255;
 				}
 			}
 		}
 	}
-
+	//std::cout << "Finished processing sphere.\n";
 }
 
 void Slicer::writeSlice(unsigned char** slice, int sliceNum, int imageWidth, int imageHeight, std::string outputDir, std::string filename)
@@ -106,9 +108,9 @@ void Slicer::writeSlice(unsigned char** slice, int sliceNum, int imageWidth, int
 	{
 		for(j = 0; j < imageWidth; j++)
 		{
-			image[3 * (j * imageWidth + i)] = slice[i][j];
-			image[3 * (j * imageWidth + i) + 1] = slice[i][j];
-			image[3 * (j * imageWidth + i) + 2] = slice[i][j];
+			image[(j * imageWidth + i)] = slice[i][j];
+			image[(j * imageWidth + i) + 1] = slice[i][j];
+			image[(j * imageWidth + i) + 2] = slice[i][j];
 		}
 	}
 
