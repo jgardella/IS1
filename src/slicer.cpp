@@ -6,7 +6,7 @@ void Slicer::writeSlices(std::vector<Shape*>* shapes, int pixelWidth, int pixelH
 {
 	std::cout << "writeSlices entered.\n";
 	unsigned int i;
-	int j;
+	int j, k, l;
 
 	unsigned char*** grid = create3DGrid(numSlices, imageWidth, imageHeight);
 	std::cout << "Created 3D grid.\n";
@@ -27,6 +27,17 @@ void Slicer::writeSlices(std::vector<Shape*>* shapes, int pixelWidth, int pixelH
 		writeSlice(grid[j], j, imageWidth, imageHeight, outputDir, filename);
 	}
 	std::cout << "Finished writing slices.\n";
+
+	for(j = 0; j < numSlices; j++)
+	{
+		for(k = 0; k < pixelWidth; k++)
+		{
+			delete[] grid[j][k];
+		}
+
+		delete[] grid[j];
+	}
+	delete[] grid;
 }
 
 unsigned char*** Slicer::create3DGrid(int numSlices, int imageWidth, int imageHeight)
