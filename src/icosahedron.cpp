@@ -132,3 +132,36 @@ bool Icosahedron::contains(float x, float y, float z)
 {
 	return (x - this->x) * (x - this->x) + (y - this->y) * (y - this->y) + (z - this->z) * (z - this->z) <= this->radius * this->radius;
 }
+
+bool Icosahedron::intersectsCube(float minX, float minY, float minZ, float maxX, float maxY, float maxZ)
+{
+	float dist_squared = radius * radius;
+	if(this->x < minX)
+	{
+		dist_squared -= (this->x - minX) * (this->x - minX);
+	}
+	else if(this->x > maxX)
+	{
+		dist_squared -= (this->x - maxX) * (this->x - maxX);
+	}
+
+	if(this->y < minY)
+	{
+		dist_squared -= (this->y - minY) * (this->y - minY);
+	}
+	else if(this->y > maxY)
+	{
+		dist_squared -= (this->y - maxY) * (this->y - maxY);
+	}
+
+	if(this->z < minZ)
+	{
+		dist_squared -= (this->z - minZ) * (this->z - minZ);
+	}
+	else if(this->z > maxZ)
+	{
+		dist_squared -= (this->z - maxZ) * (this->z - maxZ);
+	}
+
+	return dist_squared > 0;
+}

@@ -6,7 +6,7 @@ void Slicer::writeSlices(std::vector<Shape*>* shapes, int pixelWidth, int pixelH
 {
 	std::cout << "writeSlices entered.\n";
 	unsigned int i;
-	int j, k, l;
+	int j, k;
 
 	unsigned char*** grid = create3DGrid(numSlices, imageWidth, imageHeight);
 	std::cout << "Created 3D grid.\n";
@@ -83,7 +83,7 @@ void Slicer::addSphereToGrid(Icosahedron* sphere, unsigned char*** grid,
 		{
 			for(z = sphereMinZ; z <= sphereMaxZ; z += sliceThickness)
 			{
-				if(sphere->contains(x, y, z))
+				if(sphere->intersectsCube(x, y, z, x + pixelWidth, y + pixelHeight, z + sliceThickness))
 				{
 					// if sphere contains the given point, set it as occupied in the grid
 					grid[(int) z / sliceThickness][(int) x / pixelWidth][(int) y / pixelHeight] = 255;

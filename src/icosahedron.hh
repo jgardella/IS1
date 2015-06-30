@@ -16,6 +16,8 @@ class Icosahedron : public Shape
 
 		bool contains(float x, float y, float z);
 
+		bool intersectsCube(float minX, float minY, float minZ, float maxX, float maxY, float maxZ);
+
 	private:
 		std::map<std::pair<int, int>, int>* refinementMap;
 		float radius;
