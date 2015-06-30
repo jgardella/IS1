@@ -4,11 +4,14 @@ void Slicer::writeSlices(std::vector<Shape*>* shapes, int pixelWidth, int pixelH
 		int sliceThickness, int numSlices, int imageWidth, int imageHeight,
 		std::string outputDir, std::string filename)
 {
+	std::cout << "writeSlices entered.\n";
 	unsigned int i;
 	int j;
 
 	unsigned char*** grid = create3DGrid(numSlices, imageWidth, imageHeight);
+	std::cout << "Created 3D grid.\n";
 
+	std::cout << "Setting occupied parts of grid.\n";
 	// set occupied parts of grid based on shape list
 	for(i = 0; (unsigned int) i < shapes->size(); i++)
 	{
@@ -16,11 +19,14 @@ void Slicer::writeSlices(std::vector<Shape*>* shapes, int pixelWidth, int pixelH
 		addSphereToGrid(s, grid, numSlices, imageWidth, imageHeight, sliceThickness, pixelWidth, pixelHeight);
 	}
 
+	std::cout << "Writing slices to disk.\n";
 	// write slice images to disk
-	for(j = 0; j < numSlices; i++)
+	for(j = 0; j < numSlices; j++)
 	{
+		std::cout << "Writing slice " << j << " to disk.\n";
 		writeSlice(grid[j], j, imageWidth, imageHeight, outputDir, filename);
 	}
+	std::cout << "Finished writing slices.\n";
 }
 
 unsigned char*** Slicer::create3DGrid(int numSlices, int imageWidth, int imageHeight)

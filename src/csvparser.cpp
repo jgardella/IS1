@@ -34,9 +34,16 @@ std::vector<Shape*>* CSVParser::parseCSV(std::string filename, int resolution, f
 			}
 			i++;
 		}
-		if(r > minR && r <  maxR)
+		if(minR >= 0 && maxR >= 0 && radius >= 0)
 		{
-			shapeList->push_back(new Icosahedron(x, y, z, radius, resolution));
+			if(r > minR && r <  maxR)
+			{
+				shapeList->push_back(new Icosahedron(x, y, z, radius, resolution));
+			}
+		}
+		else
+		{
+			shapeList->push_back(new Icosahedron(x, y, z, r, resolution));
 		}
 	}
 	return shapeList;
