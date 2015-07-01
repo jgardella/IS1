@@ -99,7 +99,10 @@ void Slicer::addSphereToGrid(Icosahedron* sphere, unsigned char*** grid,
 void Slicer::writeSlice(unsigned char** slice, int sliceNum, int imageWidth, int imageHeight, std::string outputDir, std::string filename)
 {
 	int i, j;
-	char* fname = (char*) (outputDir + "/" + filename + std::to_string(sliceNum)).c_str();
+
+	std::string fnamestr = outputDir + "/" + filename + std::to_string(sliceNum) + ".pgm";
+	char* fname = new char[fnamestr.length() + 1];
+	std::strcpy(fname, fnamestr.c_str());
 
 	// convert slice to 1d array
 	unsigned char* image = new unsigned char[imageWidth * imageHeight * 3];
@@ -109,10 +112,12 @@ void Slicer::writeSlice(unsigned char** slice, int sliceNum, int imageWidth, int
 		for(j = 0; j < imageWidth; j++)
 		{
 			image[(j * imageWidth + i)] = slice[i][j];
-			image[(j * imageWidth + i) + 1] = slice[i][j];
-			image[(j * imageWidth + i) + 2] = slice[i][j];
+			//image[(j * imageWidth + i) + 1] = slice[i][j];
+			//image[(j * imageWidth + i) + 2] = slice[i][j];
 		}
 	}
 
 	write_pgm_Uimage(image, fname, imageWidth, imageHeight);
+
+	delete fname;
 }
