@@ -23,12 +23,12 @@ class PlyWriter
 		// Parameters:
 		// std::vector<Shape> shapes - list of shapes to write to disk
 		// std::string outputPath - path to save shapes to
-		static void writeShapes(std::vector<Shape>* shapes, std::string outputPath);
+		static void writeShapes(std::vector<Shape*>* shapes, std::string outputPath);
 
 	private:
 
 		static void writeHeader(Shape& shape, std::ofstream& file);
-		static void writeShapesHeader(std::vector<Shape>* shapes, std::ofstream& file);
+		static void writeShapesHeader(std::vector<Shape*>* shapes, std::ofstream& file);
 
 		static void writeVertices(Shape& shape, std::ofstream& file);
 		static void writeFaces(Shape& shape, std::ofstream& file, int offset);

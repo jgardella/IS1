@@ -12,7 +12,7 @@ void PlyWriter::write(Shape& shape, std::string outputPath)
 	}
 }
 
-void PlyWriter::writeShapes(std::vector<Shape>* shapes, std::string outputPath)
+void PlyWriter::writeShapes(std::vector<Shape*>* shapes, std::string outputPath)
 {
 	unsigned int i;
 	std::ofstream plyfile(outputPath);
@@ -21,13 +21,13 @@ void PlyWriter::writeShapes(std::vector<Shape>* shapes, std::string outputPath)
 		writeShapesHeader(shapes, plyfile);
 		for(i = 0; i < shapes->size(); i++)
 		{
-			writeVertices(shapes->at(i), plyfile);
+			writeVertices(*shapes->at(i), plyfile);
 		}
 		int offset = 0;
 		for(i = 0; i < shapes->size(); i++)
 		{
-			writeFaces(shapes->at(i), plyfile, offset);
-			offset += shapes->at(i).getVertices()->size();
+			writeFaces(*shapes->at(i), plyfile, offset);
+			offset += shapes->at(i)->getVertices()->size();
 		}
 		plyfile.close();
 	}
@@ -52,15 +52,15 @@ void PlyWriter::writeHeader(Shape& shape, std::ofstream& file)
 	file << "end_header\n";
 }
 
-void PlyWriter::writeShapesHeader(std::vector<Shape>* shapes, std::ofstream& file)
+void PlyWriter::writeShapesHeader(std::vector<Shape*>* shapes, std::ofstream& file)
 {
 	unsigned int i;
 	int numFaces = 0;
 	int numVertices = 0;
 	for(i = 0; i < shapes->size(); i++)
 	{
-		numFaces += shapes->at(i).getFaces()->size();
-		numVertices += shapes->at(i).getVertices()->size();
+		numFaces += shapes->at(i)->getFaces()->size();
+		numVertices += shapes->at(i)->getVertices()->size();
 	}
 
 	file << "ply\n";
@@ -69,7 +69,7 @@ void PlyWriter::writeShapesHeader(std::vector<Shape>* shapes, std::ofstream& fil
 	file << "property float x\n";
 	file << "property float y\n";
 	file << "property float z\n";
-	if(shapes->at(0).getVertices()->size() > 0 && shapes->at(0).getVertices()->at(0).hasNormals) // add normal component properties if shape contains normals
+	if(shapes->at(0)->getVertices()->size() > 0 && shapes->at(0)->getVertices()->at(0).hasNormals) // add normal component properties if shape contains normals
 	{
 		file << "property float nx\n";
 		file << "property float ny\n";
