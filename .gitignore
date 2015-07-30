@@ -27,9 +27,16 @@
 *.out
 *.app
 
+# Matlab
+*.m~
+
 # Data
 /data
 /ply
+/skel
+/slices
+/binarized dataset_gold
+*.csv
 
 # vim
 *.swp

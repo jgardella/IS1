@@ -16,6 +16,13 @@ class Shape
 		// float z - z coordinate of shape center
 		Shape(float x, float y, float z);
 
+		// Constructs a shape with the given center coordinates (x, y).
+		// Parameters:
+		// float x - x coordinate of shape center
+		// float y - y coordinate of shape center
+		// float z - z coordinate of shape center
+		Shape(float x, float y, float z, unsigned char r, unsigned char g, unsigned char b);
+
 		// Adds the given vertex to the shape. If absolute is true, the vertices coordinates will be interpreted
 		// as being in absolute space. If false, they will be interpreted as relative to the shape's (x, y) coordinates.
 		// Parameters:
@@ -42,10 +49,17 @@ class Shape
 		float getY();
 		float getZ();
 
+		unsigned char getR();
+		unsigned char getG();
+		unsigned char getB();
+
 	protected:
 		float x;
 		float y;
 		float z;
+		unsigned char r;
+		unsigned char g;
+		unsigned char b;
 		int id;
 		static int shapeId;
 		std::vector<Vertex>* vertices;

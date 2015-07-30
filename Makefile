@@ -1,4 +1,4 @@
-NAME = test
+NAME = skel_csvtoply
 CPP_FILES := $(wildcard src/*.cpp)
 OBJ_FILES := $(addprefix bin/,$(notdir $(CPP_FILES:.cpp=.o)))
 RM = rm -f

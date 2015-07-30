@@ -11,7 +11,7 @@ class MatrixParser
 {
 	public:
 
-		static int*** parseMatrixCSV(std::string csvName, int xSize, int ySize, int zSize);
+		static bool*** parseMatrixCSV(std::string csvName, int xSize, int ySize, int zSize);
 
 };
 

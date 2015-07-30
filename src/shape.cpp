@@ -12,6 +12,19 @@ Shape::Shape(float x, float y, float z)
 	faces = new std::vector<TFace>();
 }
 
+Shape::Shape(float x, float y, float z, unsigned char r, unsigned char g, unsigned char b)
+{
+	this->x = x;
+	this->y = y;
+	this->z = z;
+	this->id = Shape::shapeId++;
+	vertices = new std::vector<Vertex>();
+	faces = new std::vector<TFace>();
+	this->r = r;
+	this->g = g;
+	this->b = b;
+}
+
 int Shape::addVertex(Vertex& v, bool absolute)
 {
 	if(!absolute) // offset from shape center if not absolute (relative)
@@ -64,4 +77,19 @@ float Shape::getY()
 float Shape::getZ()
 {
 	return z;
+}
+
+unsigned char Shape::getR()
+{
+	return r;
+}
+
+unsigned char Shape::getG()
+{
+	return g;
+}
+
+unsigned char Shape::getB()
+{
+	return b;
 }

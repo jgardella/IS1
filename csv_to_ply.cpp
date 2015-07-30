@@ -12,7 +12,7 @@ int main(int argc, const char* argv [])
 	}
 	else
 	{
-		std::vector<Shape>* shapeList = CSVParser::parseCSV(argv[1], std::atoi(argv[3]), std::atof(argv[4]), std::atof(argv[5]), std::atof(argv[6]));
+		std::vector<Shape*>* shapeList = CSVParser::parseCSV(argv[1], std::atoi(argv[3]), std::atof(argv[4]), std::atof(argv[5]), std::atof(argv[6]));
 		PlyWriter::writeShapes(shapeList, argv[2]);
 	}
 	return 0;

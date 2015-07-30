@@ -1,17 +1,17 @@
 #include "MatrixParser.hh"
 
-int*** MatrixParser::parseMatrixCSV(std::string csvName, int xSize, int ySize, int zSize)
+bool*** MatrixParser::parseMatrixCSV(std::string csvName, int xSize, int ySize, int zSize)
 {
 	int i, j, k;
-	int*** grid = new int**[xSize];
+	bool*** grid = new bool**[xSize];
 
 	for(i = 0; i < xSize; i++)
 	{
-		grid[i] = new int*[ySize];
+		grid[i] = new bool*[ySize];
 
 		for(j = 0; j < ySize; j++)
 		{
-			grid[i][j] = new int[zSize];
+			grid[i][j] = new bool[zSize];
 
 			for(k = 0; k < zSize; k++)
 			{
@@ -27,7 +27,7 @@ int*** MatrixParser::parseMatrixCSV(std::string csvName, int xSize, int ySize, i
 	{
 		std::istringstream s(line);
 		std::string num;
-		int cellVal;
+		bool cellVal;
 		j = 0;
 		k = 0;
 		while(std::getline(s, num, ','))

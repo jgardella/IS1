@@ -1,14 +1,11 @@
-function createMat( img_folder, matFileName )
+function grid = createMat( img_folder )
    files = dir(strcat(img_folder, '/*.tif'));
    grid = [];
    i = 1;
    for file = files'
        image = imread(strcat(img_folder, '/', file.name)) < 255;
-       disp(i);
        grid(:, :, i) = image;
        i = i + 1;
    end
-
-   save(matFileName, 'grid');
 end
 
