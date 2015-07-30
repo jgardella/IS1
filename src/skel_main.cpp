@@ -19,23 +19,56 @@ int main(int argc, const char* argv [])
         int g = std::atoi(argv[7]);
         int b = std::atoi(argv[8]);
 
-        int i, j, k;
-        bool*** grid = MatrixParser::parseMatrixCSV(csvfile, xDim, yDim, zDim);
-        Shape* shape = new Shape(0, 0, 0, r, g, b);
-        for(i = 0; i < xDim; i++)
+        if(argc == 9)
         {
-            for(j = 0; j < yDim; j++)
+            int i, j, k;
+            bool*** grid = MatrixParser::parseMatrixCSV(csvfile, xDim, yDim, zDim);
+            Shape* shape = new Shape(0, 0, 0, r, g, b);
+            for(i = 0; i < xDim; i++)
             {
-                for(k = 0; k < zDim; k++)
+                for(j = 0; j < yDim; j++)
                 {
-                    if(grid[i][j][k] != 0)
+                    for(k = 0; k < zDim; k++)
                     {
-                        shape->addVertex(*new Vertex(i, j, k), true);
+                        if(grid[i][j][k] != 0)
+                        {
+                            shape->addVertex(*new Vertex(i, j, k), true);
+                        }
                     }
                 }
             }
-        }
 
-        PlyWriter::write(*shape, plyfile, true);
+            PlyWriter::write(*shape, plyfile, true);
+        }
+        else if(argc >= 13)
+        {
+            float origX = std::atof(argv[9]);
+            float origY = std::atof(argv[10]);
+            float origZ = std::atof(argv[11]);
+            float voxelWidth = std::atof(argv[12]);
+
+            int i, j, k;
+            bool*** grid = MatrixParser::parseMatrixCSV(csvfile, xDim, yDim, zDim);
+            Shape* shape = new Shape(origX, origY, origZ, r, g, b);
+            for(i = 0; i < xDim; i++)
+            {
+                for(j = 0; j < yDim; j++)
+                {
+                    for(k = 0; k < zDim; k++)
+                    {
+                        if(grid[i][j][k] != 0)
+                        {
+                            shape->addVertex(*new Vertex(i * voxelWidth, j * voxelWidth, k * voxelWidth), false);
+                        }
+                    }
+                }
+            }
+
+            PlyWriter::write(*shape, plyfile, true);
+        }
+        else
+        {
+            std::cout << "usage: skel_csvtoply <csvfile> <plyfile> <xDim> <yDim> <zDim> <r> <g> <b> <origX> <origY> <origZ> <voxelWidth>\n";
+        }
     }
 }
