@@ -70,8 +70,8 @@ Below is a short description of the methods that are used to do the extraction. 
     skeletonization result to. Essentially this method just calls createMat and then runs extractChannels on the grid it returns.
     To create a mesh from the csv this function creates, pass it to skel_main.cpp.
 
-Channel Extraction Shell Script
-===============================
+Channel Extraction Shell Script (extract.sh)
+============================================
 In addition to the C++ and Matlab code, there is also one bash script which performs the entire skeletonization process, including both the Matlab code
 and the C++ code. The parameters are as follows:
     <slicesFolder> folder containing slice images
