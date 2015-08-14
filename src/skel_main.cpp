@@ -45,7 +45,7 @@ int main(int argc, const char* argv [])
             float origX = std::atof(argv[9]);
             float origY = std::atof(argv[10]);
             float origZ = std::atof(argv[11]);
-            float voxelWidth = std::atof(argv[12]);
+            float scalingFactor = std::atof(argv[12]);
 
             int i, j, k;
             bool*** grid = MatrixParser::parseMatrixCSV(csvfile, xDim, yDim, zDim);
@@ -58,7 +58,7 @@ int main(int argc, const char* argv [])
                     {
                         if(grid[i][j][k] != 0)
                         {
-                            shape->addVertex(*new Vertex(i * voxelWidth, j * voxelWidth, k * voxelWidth), false);
+                            shape->addVertex(*new Vertex(i * scalingFactor, j * scalingFactor, k * scalingFactor), false);
                         }
                     }
                 }
@@ -68,7 +68,7 @@ int main(int argc, const char* argv [])
         }
         else
         {
-            std::cout << "usage: skel_csvtoply <csvfile> <plyfile> <xDim> <yDim> <zDim> <r> <g> <b> <origX> <origY> <origZ> <voxelWidth>\n";
+            std::cout << "usage: skel_csvtoply <csvfile> <plyfile> <xDim> <yDim> <zDim> <r> <g> <b> <origX> <origY> <origZ> <scalingFactor>\n";
         }
     }
 }
