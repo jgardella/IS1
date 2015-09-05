@@ -58,7 +58,7 @@ int main(int argc, const char* argv [])
                     {
                         if(grid[i][j][k] != 0)
                         {
-                            shape->addVertex(*new Vertex(i * scalingFactor, j * scalingFactor, k * scalingFactor), false);
+                            shape->addVertex(*new Vertex(j * scalingFactor, i * scalingFactor, k * scalingFactor), false);
                         }
                     }
                 }
