@@ -18,11 +18,6 @@ unsigned char *read_pgm_image(char *fname, int *nx, int *ny)
 	ifstream fin;
 
 	fin.open(fname, ios::binary);
-	if (fin == NULL){
-		cout << "File I/O error" << endl;
-		exit(0);
-	}
-
 
 	char line[110];
 	fin.getline(line,100); //read P#
@@ -73,10 +68,6 @@ unsigned char *read_ppm_image(char *fname, int *nx, int *ny)
 	ifstream fin;
 
 	fin.open(fname, ios::binary);
-	if (fin == NULL){
-		cout << "File I/O error" << endl;
-		exit(0);
-	}
 
 	char line[110];
 	fin.getline(line,100); //read P#
@@ -118,10 +109,6 @@ int write_pgm_Uimage(unsigned char *image, char *fname, int nx, int ny)
 	//cout << "Writing " << nx << "*" << ny << " image." << endl;
 
 	fout.open(fname, ios::binary);
-	if (fout == NULL) {
-		cout << "File I/O error" << endl;
-		return(0);
-	}
 
 	fout << "P5" << endl;
 	fout << "# Intermediate image file" << endl;
@@ -167,10 +154,6 @@ int write_ppm_Uimage(unsigned char *image, char *fname, int nx, int ny)
 	//cout << "Writing " << nx << "x" << ny << " image." << endl;
 
 	fout.open(fname, ios::binary);
-	if (fout == NULL) {
-		cout << "File I/O error" << endl;
-		return(0);
-	}
 
 	fout << "P6" << endl;
 	fout << "# Intermediate image file" << endl;
