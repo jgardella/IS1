@@ -39,6 +39,28 @@ function displayGraph(fileName)
                 'MarkerFaceColor',ncol,...
                 'Color','k');
         end;
+           
+        % draw shortest path as green
+        [minPath, minCost] = shortestPath(A2, node2, .05);
+        if(minCost ~= Inf)
+            for i=1:length(minPath)-1
+               nodeA = node2(minPath(i));
+               nodeB = node2(minPath(i + 1));
+               line([nodeB.comy nodeA.comy], [nodeB.comx nodeA.comx], [nodeB.comz nodeA.comz], 'Color','g','LineWidth',5);
+               if (i ~= 1)
+                    plot3(nodeA.comy, nodeA.comx, nodeA.comz, 'o', 'Markersize', 12, 'MarkerFaceColor', 'g', 'Color', 'k');
+               end
+            end
+            % display start and end node as magenta
+            firstNode = node2(minPath(1));
+            lastNode = node2(minPath(end));
+            plot3(firstNode.comy, firstNode.comx, firstNode.comz, 'o', 'Markersize', 12, 'MarkerFaceColor', 'm', 'Color', 'k');
+            plot3(lastNode.comy, lastNode.comx, lastNode.comz, 'o', 'Markersize', 12, 'MarkerFaceColor', 'm', 'Color', 'k');
+            disp(['Found path of length ' num2str(minCost) '.']);
+        else
+            display('No path found.');
+        end
+
         axis image;axis off;
         set(gcf,'Color','white');
         drawnow;
