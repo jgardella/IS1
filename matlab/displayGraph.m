@@ -41,7 +41,7 @@ function displayGraph(fileName)
         end;
            
         % draw shortest path as green
-        [minPath, minCost] = shortestPath(A2, node2, .05);
+        [minPath, minCost, pathCount] = shortestPath(A2, node2, .05, .05);
         if(minCost ~= Inf)
             for i=1:length(minPath)-1
                nodeA = node2(minPath(i));
@@ -57,6 +57,7 @@ function displayGraph(fileName)
             plot3(firstNode.comy, firstNode.comx, firstNode.comz, 'o', 'Markersize', 12, 'MarkerFaceColor', 'm', 'Color', 'k');
             plot3(lastNode.comy, lastNode.comx, lastNode.comz, 'o', 'Markersize', 12, 'MarkerFaceColor', 'm', 'Color', 'k');
             disp(['Found path of length ' num2str(minCost) '.']);
+            disp(['Number of paths: ' num2str(pathCount) '.']);
         else
             display('No path found.');
         end
@@ -64,5 +65,4 @@ function displayGraph(fileName)
         axis image;axis off;
         set(gcf,'Color','white');
         drawnow;
-        view(-17,46);
 end
